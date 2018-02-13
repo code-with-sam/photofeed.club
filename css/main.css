@@ -1,3 +1,49 @@
+body {
+  font-family: -apple-system,BlinkMacSystemFont,San Francisco,Helvetica Neue,Helvetica,Ubuntu,Roboto,Noto,Segoe UI,Arial,sans-serif;
+}
+.topbar {
+  height: 60px;
+}
+.topbar__brand {
+  line-height: 60px;
+  padding: 15px;
+  font-weight: 700;
+}
+.topbar__cta  {
+  float: right;
+}
+.header {
+  background: url(https://source.unsplash.com/26GBM9cW33g/1400x600) center center;
+  background-size: cover;
+  padding: 125px 0;
+  position: relative;
+}
+
+.header__title {
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em
+}
+
+.header__people {
+    position: absolute;;
+    left: 0;
+    bottom: 0;
+    color: #fff;
+    padding: 0 30px
+}
+
+.header__learn {
+  position: absolute;;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  padding: 0 30px
+}
+
 .gallery {
   max-width: 100%;
   margin: 30px ;
@@ -15,4 +61,29 @@
 .item {
   width: calc(33.3% - 16px);
   margin: 16px auto
+}
+
+
+
+
+.btn {
+  margin:  15px 15px 15px 0;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 12px;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  transition: all 200ms ease-in-out;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn--primary {
+  background-color: #67a2e5;
+  color: #fff;
+}
+.btn--secondary {
+  border: solid 1px #a5a5a5;
+  color: #a5a5a5;
 }
