@@ -1,5 +1,18 @@
-img {
-  margin: 16px auto
+.gallery {
+  max-width: 100%;
+  margin: 30px ;
+}
+.item__image {
+  max-width: 100%;
+  opacity: 1;
+  transition: opacity 600ms ease;
 }
 
-.item { width: calc(33.3% - 16px); }
+.hidden {
+  opacity: 0;
+}
+
+.item {
+  width: calc(33.3% - 16px);
+  margin: 16px auto
+}
