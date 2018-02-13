@@ -1,0 +1,5 @@
+img {
+  margin: 16px auto
+}
+
+.item { width: calc(33.3% - 16px); }
