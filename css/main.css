@@ -100,6 +100,23 @@ body {
 
 }
 
+.overlay {
+  display: none;
+  position: fixed;
+  top: 50px;
+  left: 10%;
+  width: 80%;
+  background: #fff;
+  min-height: 200px;
+}
+.overlay--active {
+  display: block;
+}
+
+
+
+
+
 .btn {
   margin:  15px 15px 15px 0;
   height: 30px;

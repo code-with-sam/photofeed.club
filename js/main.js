@@ -1,6 +1,10 @@
 
-let query = { 'tag': 'photofeed', 'limit': 20 }
+let query = { 'tag': 'photofeed', 'limit': 27 }
 let converter = new showdown.Converter()
+
+$('.gallery').on('click', '.item', (e) => {
+    loadPost(e.currentTarget)
+})
 
 steem.api.getDiscussionsByCreated(query, (err, result) => {
     if (err === null) {
@@ -20,7 +24,7 @@ function displayImages(result){
       image = image ? image.src : json.image[0]
 
       $('.gallery').append(`
-        <div class="item">
+        <div class="item" data-url="${post.category}/@${post.author}/${post.permlink}">
           <img class="item__image hidden" src="https://steemitimages.com/480x768/${image}">
           <div class="item__photographer">
             <span>@${post.author}</span>
@@ -54,4 +58,17 @@ function initMasonry(images){
     columnWidth: '.item',
     gutter: 24
   });
+}
+
+function loadPost(item) {
+  let post = $(item).data()
+
+
+  let template = `
+  <section class="finally-comments" data-id="https://steemit.com/${post.url}" data-reputation="true" data-values="true" data-profile="true"></section>
+  `
+  $('.overlay').empty()
+  $('.overlay').append(template)
+  $('.overlay').addClass('overlay--active')
+  finallyCommentsSystem.init()
 }
