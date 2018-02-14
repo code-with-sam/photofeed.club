@@ -20,7 +20,17 @@ function displayImages(result){
       image = image ? image.src : json.image[0]
 
       $('.gallery').append(`
-        <div class="item"><img class="item__image hidden" src="${image}"></div>
+        <div class="item">
+          <img class="item__image hidden" src="https://steemitimages.com/480x768/${image}">
+          <div class="item__photographer">
+            <span>@${post.author}</span>
+          </div>
+          <div class="item__like">
+            <span class="item__heart">♥</span>
+            <span class="item__heart-count">${post.net_votes}</span>
+          </div>
+          <div class="item__overlay"></div>
+        </div>
         `)
   }
   checkImages()

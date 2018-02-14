@@ -60,11 +60,45 @@ body {
 
 .item {
   width: calc(33.3% - 16px);
-  margin: 16px auto
+  margin: 16px auto;
+  position: relative;
+
 }
 
+.item__overlay {
+    z-index: 10;
+    position: absolute;
+    bottom: 0;
+    height: 55px;
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0), #2f2f2fa1);
+}
 
+.item__photographer {
+  z-index: 100;
 
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 15px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+}
+.item__like {
+  z-index: 100;
+  padding: 5px 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: #a5a5a5;
+  background: #fafafa;
+  border-radius: 5px;
+  margin:  15px;
+}
+.item__heart {
+
+}
 
 .btn {
   margin:  15px 15px 15px 0;
