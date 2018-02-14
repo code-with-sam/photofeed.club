@@ -1,51 +1,69 @@
 
-let query = { 'tag': 'photofeed', 'limit': 10 }
-let converter = new showdown.Converter()
+let query = { 'tag': 'photofeed', 'limit': 14 }
+let converter = new showdown.Converter(
+    { tables: true }
+)
 let allContent = []
 
 $('.gallery').on('click', '.item', (e) => {
     loadPost(e.currentTarget)
 })
 
-steem.api.getDiscussionsByCreated(query, (err, result) => {
+getTrending()
+
+function getTrending(){
+
+  steem.api.getDiscussionsByTrending(query, (err, result) => {
     if (err === null) {
-        displayImages(result)
+      displayImages(result)
     } else {
-        console.log(err);
+      console.log(err);
     }
-});
+  });
+}
+
+function getLatest(){
+
+  steem.api.getDiscussionsByCreated(query, (err, result) => {
+    if (err === null) {
+      displayImages(result)
+    } else {
+      console.log(err);
+    }
+  });
+}
 
 function displayImages(result){
   for (let i = 0; i < result.length ; i++) {
       let post = result[i];
-      let json = JSON.parse(post.json_metadata)
+      console.log(post)
 
+      var urlRegex = /(https?:\/\/[^\s]+)/g;
+
+      post.body = post.body.replace(urlRegex, (url) => {
+        console.log('matches: ', url)
+
+        let last = url.slice(-3)
+
+        if(last === 'jpg' || last === 'png' || last === 'jpe' || last === 'gif')  {
+          console.log('last char is valid: ', url)
+                  console.log('matches: ', url)
+          return '<img src="' + url + '">';
+        } else {
+          return url
+        }
+      })
       let placeholder = document.createElement('div');
-      placeholder.innerHTML = converter.makeHtml(post.body);
+      placeholder.innerHTML = converter.makeHtml(post.body)
       let image = placeholder.querySelector('img') ;
-      post.body = post.body.replace('<p><br></p>', '')
-      post.body = post.body.replace('<p></p>', '')
 
-      if (image == false && json.image[0] != undefined){
-
-        json.image.forEach((url) => {
-          post.body = post.body.replace(url, '<img src="' + url + '">')
-        })
-      }
-      placeholder.innerHTML = converter.makeHtml(post.body);
-      image = placeholder.querySelector('img') ;
-
-      console.log(image)
-
-      image = image ? image.src : json.image[0]
-      console.log(image)
-
+      image = image.src
 
       allContent.push(post);
 
       $('.gallery').append(`
-        <div class="item hidden" data-url="${post.category}/@${post.author}/${post.permlink}" data-permlink="${ post.permlink }">
-          <img class="item__image " src="https://steemitimages.com/480x768/${image}">
+        <div class="item " data-url="${post.category}/@${post.author}/${post.permlink}" data-permlink="${ post.permlink }">
+          <img class="item__image " src="https://steemitimages.com/480x768/${image}" onerror="">
           <div class="item__photographer">
             <span>@${post.author}</span>
           </div>
