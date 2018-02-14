@@ -100,24 +100,19 @@ function initMasonry(images){
 
 function loadPost(item) {
   let post = $(item).data()
-  console.log('SELECTED permlink: ', post.permlink)
-  console.log('all: ', allContent)
-  allContent.map( x => {
-    console.log('permlink: ', x.permlink)
-  })
-
   let rawPost = allContent.filter( x  => x.permlink === post.permlink )[0]
 
   let html = converter.makeHtml(rawPost.body)
   html = html.replace('<p><br></p>', '')
   html = html.replace('<p></p>', '')
 
-  $('body').addClass('noscroll')
+  lastTop = $(window).scrollTop();
+
+  $('body').addClass( 'noscroll' ).css( { top: -lastTop } )
+
   $('.overlay__content').empty()
   $('.overlay__content').append(`<h1 class="title">${rawPost.title}</h1>`)
   $('.overlay__content').append(html)
-
-
 
   let template = `
   <section class="finally-comments" data-id="https://steemit.com/${post.url}" data-reputation="true" data-values="true" data-profile="true"></section>
@@ -126,10 +121,11 @@ function loadPost(item) {
   $('.overlay, .overlay__bg').addClass('overlay--active')
 
   finallyCommentsSystem.init()
+  $('.overlay').scrollTop(0)
 }
+
 $('.overlay__bg').on('click', () => {
   $('body').removeClass('noscroll')
-
+  $(window).scrollTop( lastTop );
   $('.overlay, .overlay__bg').removeClass('overlay--active')
-
 })

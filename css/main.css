@@ -6,8 +6,10 @@ body {
 }
 
 .noscroll {
-    overflow-x: hidden;
-    overflow-y: hidden;
+    overflow: hidden;
+    /*height: 100%;*/
+    position: fixed;
+    width: 100%;
 }
 
 .topbar {
@@ -53,6 +55,12 @@ body {
   padding: 0 30px
 }
 
+.nav {
+  text-align: center;
+  padding: 45px 0 15px;
+}
+
+
 .gallery {
   max-width: 100%;
   margin: 30px ;
@@ -67,7 +75,7 @@ body {
   opacity: 1;
   transition: opacity 600ms ease;
   width: calc(33.3% - 16px);
-  margin: 16px auto;
+  margin: 0 auto 16px;
   position: relative;
 
 }
@@ -146,8 +154,8 @@ main {
   z-index: 1200;
   background: #fff;
   padding: 30px;
-  width: 70%;
-  margin: 30px 15%;
+  width: 60%;
+  margin: 30px 20%;
 }
 .overlay__content img {
   max-width: 100%;
