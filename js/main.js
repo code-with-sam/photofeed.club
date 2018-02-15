@@ -1,10 +1,12 @@
 
-let query = { 'tag': 'photofeed', 'limit': 14 }
-let converter = new showdown.Converter(
-    { tables: true }
-)
+let query = { 'tag': 'photofeed', 'limit': 28 }
+let converter = new showdown.Converter({ tables: true })
 let allContent = []
 let allUsers = []
+let msnry;
+let $gallery = $('.gallery')
+
+getTrending(query, true)
 
 $('.gallery').on('click', '.item', (e) => {
     loadPost(e.currentTarget)
@@ -16,21 +18,26 @@ $('.nav__link').on('click', (e) => {
   $('.nav__link').removeClass('nav__link--active');
   $(e.currentTarget).addClass('nav__link--active');
   $('.gallery').empty()
+  allContent = []
+
   if(filter === 'trending'){
-    getTrending()
+    getTrending(query, true)
   } else {
-    getLatest()
+    getLatest(query, true)
   }
 })
 
+$('.more').on('click', ()=> {
+  getMoreContent()
+})
 
-getTrending()
 
-function getTrending(){
+
+function getTrending(query, initial, callback){
 
   steem.api.getDiscussionsByTrending(query, (err, result) => {
     if (err === null) {
-      displayImages(result)
+      displayImages(result, initial, initial ? false : callback)
       getaccounts(result.map(post => post.author))
     } else {
       console.log(err);
@@ -38,17 +45,49 @@ function getTrending(){
   });
 }
 
-function getLatest(){
+function getLatest(query, initial, callback){
 
   steem.api.getDiscussionsByCreated(query, (err, result) => {
     if (err === null) {
-      displayImages(result)
+      displayImages(result, initial, initial ? false : callback)
       getaccounts(result.map(post => post.author))
     } else {
       console.log(err);
     }
   });
 }
+
+function getMoreContent(){
+  let lastItem = allContent[allContent.length - 1]
+  let filter = $('.nav__link--active').data('filter')
+  let query = {
+      'tag':
+      'photofeed',
+      'limit': 35,
+      start_author: lastItem.author,
+      start_permlink: lastItem.permlink }
+
+      let callback = (items) => {
+          items.forEach((item) => {
+              let $item = $(item)
+              $gallery.append($item)
+
+              $item.children('img').on('load', (e) => {
+                $(e.currentTarget).parent().removeClass('hidden')
+                $gallery.masonry( 'appended', $(e.currentTarget).parent() )
+              })
+          })
+      }
+
+      if(filter === 'trending'){
+        console.log(`getting more ${filter}`)
+        getTrending(query, false, callback)
+      } else {
+        console.log(`getting more ${filter}`)
+        getLatest(query, false, callback)
+      }
+}
+
 
 function getaccounts(usernames){
   steem.api.getAccounts(usernames, (err, result) => {
@@ -56,12 +95,12 @@ function getaccounts(usernames){
   })
 }
 
-function displayImages(result){
+function displayImages(result, initialLoad, callback){
+  let items = []
   for (let i = 0; i < result.length ; i++) {
       let post = result[i];
 
       var urlRegex = /(https?:\/\/[^\s]+)/g;
-
       post.body = post.body.replace(urlRegex, (url) => {
         let last = url.slice(-3)
         if(last === 'jpg' || last === 'png' || last === 'jpe' || last === 'gif')  {
@@ -70,16 +109,17 @@ function displayImages(result){
           return url
         }
       })
-      let placeholder = document.createElement('div');
-      placeholder.innerHTML = converter.makeHtml(post.body)
-      let image = placeholder.querySelector('img') ;
 
+      if( typeof JSON.parse(post.json_metadata).image === 'undefined' ){
+        image = genImageInHTML(post.body)
+      } else {
+        image = JSON.parse(post.json_metadata).image[0]
+      }
 
       allContent.push(post);
-
-      $('.gallery').append(`
-        <div class="item " data-url="${post.url}" data-permlink="${ post.permlink }">
-          <img class="item__image " src="https://steemitimages.com/480x768/${image.src}" onerror="">
+      let itemTemplate = `
+        <div class="item hidden" data-url="${post.url}" data-permlink="${ post.permlink }">
+          <img class="item__image " src="https://steemitimages.com/480x768/${image}" onerror="">
           <div class="item__photographer">
             <span>@${post.author}</span>
           </div>
@@ -89,12 +129,30 @@ function displayImages(result){
           </div>
           <div class="item__overlay"></div>
         </div>
-        `)
+        `
+      items.push(itemTemplate)
   }
-  checkImages()
+  if(initialLoad){
+    checkImages(items)
+  } else {
+    items.shift()
+    callback(items)
+  }
 }
 
-function checkImages(){
+function genImageInHTML(markdown){
+    let placeholder = document.createElement('div');
+    placeholder.innerHTML = converter.makeHtml(markdown)
+    let image = placeholder.querySelector('img') ;
+    return image.src
+}
+
+function checkImages(items){
+
+  items.forEach((item) => {
+    $gallery.append(item);
+  })
+
   let images = $('img.item__image');
   let loaded = 0;
 
@@ -107,10 +165,11 @@ function checkImages(){
 
 function initMasonry(images){
   images.parent().removeClass('hidden')
-  let msnry = new Masonry( '.gallery', {
+  $gallery.masonry('destroy')
+  $gallery.masonry({
     itemSelector: '.item',
     columnWidth: '.item',
-    gutter: 24
+    gutter: 16
   });
 }
 

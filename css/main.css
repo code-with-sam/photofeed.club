@@ -272,3 +272,13 @@ main {
   border: solid 1px #a5a5a5;
   color: #a5a5a5;
 }
+.btn--large {
+  font-size: 20px;
+  padding: 4px 16px;
+}
+
+
+.more {
+  text-align: center;
+  padding: 50px 0;
+}
