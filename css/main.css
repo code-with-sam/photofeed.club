@@ -30,7 +30,7 @@ body {
 .header {
   background: url(https://source.unsplash.com/26GBM9cW33g/1400x600) center center;
   background-size: cover;
-  padding: 125px 0;
+  padding: 100px 0;
   position: relative;
 }
 
@@ -38,11 +38,19 @@ body {
   text-align: center;
   color: #fff;
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  margin-bottom: 20px;
+}
+.header__sub-title {
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.3em
 }
-
 .header__people {
     position: absolute;;
     left: 0;
@@ -80,9 +88,16 @@ body {
 
 
 .gallery {
-  max-width: 100%;
-  margin: 30px ;
+  margin: 30px 2.5%;
+  max-width: 1400px;
+  width: 95%
 }
+@media(min-width: 1400px){
+  .gallery {
+    margin: 30px auto;
+  }
+}
+
 .item__image {
   max-width: 100%;
 }
@@ -92,10 +107,23 @@ body {
 .item {
   opacity: 1;
   transition: opacity 600ms ease;
-  width: calc(33.3% - 16px);
+  width: calc(33.3% - 10.667px);
   margin: 0 auto 16px;
   position: relative;
+}
 
+@media(max-width: 768px){
+  .item {
+    width: calc(50% - 8px);
+    margin: 0 auto 16px;
+  }
+}
+
+@media(max-width: 440px){
+  .item {
+    width: 100%;
+    margin: 0 auto 16px;
+  }
 }
 
 .hidden {
@@ -103,6 +131,8 @@ body {
 }
 
 .item__overlay {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
     z-index: 10;
     position: absolute;
     bottom: 0;
@@ -112,8 +142,9 @@ body {
 }
 
 .item__photographer {
+opacity: 0;
+transition: opacity 300ms ease-in-out;
   z-index: 100;
-
   position: absolute;
   bottom: 0;
   left: 0;
@@ -123,8 +154,10 @@ body {
   font-size: 14px;
 }
 .item__like {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
   z-index: 100;
-  padding: 5px 10px;
+  padding: 3px 8px;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -133,6 +166,16 @@ body {
   border-radius: 5px;
   margin:  15px;
 }
+
+.item:hover {
+  cursor: zoom-in;
+}
+.item:hover .item__like,
+.item:hover .item__photographer,
+.item:hover .item__overlay  {
+  opacity: 1;
+}
+
 .item__heart {
 
 }
@@ -147,6 +190,10 @@ body {
   left: 0;
   right: 0;
 }
+.overlay__bg:hover {
+  cursor: zoom-out;
+}
+
 main {
   height: 100%;
 }
@@ -168,13 +215,32 @@ main {
 .overlay__content {
   position: relative;
   border-radius: 4px;
-    box-shadow: 0 8px 16px rgba(0,0,0,.15);
+  box-shadow: 0 8px 16px rgba(0,0,0,.15);
   z-index: 1200;
   background: #fff;
   padding: 30px;
-  width: 60%;
-  margin: 30px 20%;
+  width: 70%;
+  margin: 30px auto;
+  max-width: 800px;
 }
+
+
+@media(max-width: 680px){
+  .overlay__content {
+    padding: 15px;
+    width: 90%;
+    margin: 50px 5%;
+  }
+}
+
+@media(max-width: 900px){
+  .overlay__content {
+    padding: 15px;
+    width: 80%;
+    margin: 50px 10%;
+  }
+}
+
 .overlay__content img {
   max-width: 100%;
   margin-bottom: 15px;
@@ -197,6 +263,12 @@ main {
   padding: 10px 10px;
   background: #f3f1f1;
   border: solid 2px #fff;
+}
+.overlay__content ol, ul {
+  padding: 10px 20px;
+}
+.overlay__content li {
+  margin: 3px 0;
 }
 
 .overlay__content tr:nth-of-type(odd) td{
@@ -240,7 +312,8 @@ main {
   padding: 5px 10px;
   border: solid 1px #ccc;
   border-radius: 5px;
-  margin: 0 0 0 10px;
+  margin: 0 0 5px 10px;
+  float: left;
 }
 
 .overlay__title  {
@@ -248,8 +321,15 @@ main {
   margin-bottom: 15px;
   max-width: 75%;
 }
+@media(max-width: 680px){
+  .overlay__title {
+  max-width: 100%;
+  font-size: 1.5rem;
+  }
+}
+
 .overlay__border {
-  margin: 1rem;
+  margin: 1rem 0;
 }
 .btn {
   margin:  15px 15px 15px 0;

@@ -169,7 +169,8 @@ function initMasonry(images){
   $gallery.masonry({
     itemSelector: '.item',
     columnWidth: '.item',
-    gutter: 16
+    gutter: 16,
+    percentPosition: true
   });
 }
 
