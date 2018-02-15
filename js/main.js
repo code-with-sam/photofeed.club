@@ -4,6 +4,7 @@ let converter = new showdown.Converter(
     { tables: true }
 )
 let allContent = []
+let allUsers = []
 
 $('.gallery').on('click', '.item', (e) => {
     loadPost(e.currentTarget)
@@ -16,6 +17,7 @@ function getTrending(){
   steem.api.getDiscussionsByTrending(query, (err, result) => {
     if (err === null) {
       displayImages(result)
+      getaccounts(result.map(post => post.author))
     } else {
       console.log(err);
     }
@@ -27,27 +29,28 @@ function getLatest(){
   steem.api.getDiscussionsByCreated(query, (err, result) => {
     if (err === null) {
       displayImages(result)
+      getaccounts(result.map(post => post.author))
     } else {
       console.log(err);
     }
   });
 }
 
+function getaccounts(usernames){
+  steem.api.getAccounts(usernames, (err, result) => {
+    allUsers = allUsers.concat(result)
+  })
+}
+
 function displayImages(result){
   for (let i = 0; i < result.length ; i++) {
       let post = result[i];
-      console.log(post)
 
       var urlRegex = /(https?:\/\/[^\s]+)/g;
 
       post.body = post.body.replace(urlRegex, (url) => {
-        console.log('matches: ', url)
-
         let last = url.slice(-3)
-
         if(last === 'jpg' || last === 'png' || last === 'jpe' || last === 'gif')  {
-          console.log('last char is valid: ', url)
-                  console.log('matches: ', url)
           return '<img src="' + url + '">';
         } else {
           return url
@@ -57,13 +60,12 @@ function displayImages(result){
       placeholder.innerHTML = converter.makeHtml(post.body)
       let image = placeholder.querySelector('img') ;
 
-      image = image.src
 
       allContent.push(post);
 
       $('.gallery').append(`
-        <div class="item " data-url="${post.category}/@${post.author}/${post.permlink}" data-permlink="${ post.permlink }">
-          <img class="item__image " src="https://steemitimages.com/480x768/${image}" onerror="">
+        <div class="item " data-url="${post.url}" data-permlink="${ post.permlink }">
+          <img class="item__image " src="https://steemitimages.com/480x768/${image.src}" onerror="">
           <div class="item__photographer">
             <span>@${post.author}</span>
           </div>
@@ -101,6 +103,31 @@ function initMasonry(images){
 function loadPost(item) {
   let post = $(item).data()
   let rawPost = allContent.filter( x  => x.permlink === post.permlink )[0]
+  let allCopy = allUsers.map(x => Object.assign({}, x))
+  let user = allCopy.filter( x  => x.name === rawPost.author )[0]
+  console.log('META: ', user.json_metadata)
+
+  let profileImage = 'img/default-user.jpg';
+
+  try {
+
+    if (user.json_metadata == '' ||
+    user === undefined ||
+    user.json_metadata == 'undefined' ||
+    user.json_metadata === undefined ) {
+      user.json_metadata = { profile_image : ''}
+    } else {
+      user.json_metadata = JSON.parse(user.json_metadata).profile
+    }
+
+    if (user.json_metadata === undefined){
+      user.json_metadata = { profile_image : ''}
+    }
+    profileImage = user.json_metadata.profile_image ? 'https://steemitimages.com/128x128/' + user.json_metadata.profile_image : '';
+
+  } catch(err){
+    console.log(err)
+  }
 
   let html = converter.makeHtml(rawPost.body)
   html = html.replace('<p><br></p>', '')
@@ -110,14 +137,24 @@ function loadPost(item) {
 
   $('body').addClass( 'noscroll' ).css( { top: -lastTop } )
 
-  $('.overlay__content').empty()
-  $('.overlay__content').append(`<h1 class="title">${rawPost.title}</h1>`)
-  $('.overlay__content').append(html)
-
-  let template = `
-  <section class="finally-comments" data-id="https://steemit.com/${post.url}" data-reputation="true" data-values="true" data-profile="true"></section>
+  let tags = JSON.parse(rawPost.json_metadata).tags.reduce( (all,tag) => all + `<span>${tag}</span>`, '')
+  let header = `
+  <div class="overlay__mata cf">
+    <div class="overlay__author">
+      <img class="overlay__author-img" width="35" height="35" src="${profileImage}">
+      <div class="overlay__author-info">
+        <span class="overlay__author-name">${( user.json_metadata.name ?  user.json_metadata.name : user.name ) }</span>
+        <span class="overlay__author-username">@${user.name}</span>
+      </div>
+    </div>
+    <div class="overlay__tags">${tags}</div>
+  </div>
+    <h1 class="overlay__title title">${rawPost.title}</h1>
+    <hr class="overlay__border">
   `
-  $('.overlay__content').append(template)
+  let comments = `<section class="finally-comments" data-id="https://steemit.com/${post.url}" data-reputation="true" data-values="true" data-profile="true"></section>`
+  $('.overlay__content').empty()
+  $('.overlay__content').append(header + html + comments)
   $('.overlay, .overlay__bg').addClass('overlay--active')
 
   finallyCommentsSystem.init()

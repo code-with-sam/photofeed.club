@@ -4,7 +4,11 @@
 body {
   font-family: -apple-system,BlinkMacSystemFont,San Francisco,Helvetica Neue,Helvetica,Ubuntu,Roboto,Noto,Segoe UI,Arial,sans-serif;
 }
-
+.cf:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 .noscroll {
     overflow: hidden;
     /*height: 100%;*/
@@ -184,9 +188,55 @@ main {
 .overlay__content tr:nth-of-type(odd) td{
   background: #f9f6f6;
 }
+.overlay__author {
+  float: left;
+}
+.overlay__author-img {
+  float: left;
+  border-radius: 50%;
+  min-height: 35px;
+  min-width: 35px;
+}
+.overlay__author-info {
+  float: left;
+  margin-left: 15px;
+}
+.overlay__author-username {
+  float: left;
+  font-size: 12px;
+  line-height: 1.3;
 
+}
+.overlay__author-name {
+  font-size: 15px;
+  font-weight: 700;
+  float: left;
+  display: block;
+  width: 100%;
+  line-height: 1.3;
+}
+.overlay__tags {
+  padding: 5px 0 0 0;
+  float: right;
+  display: block;
+}
+.overlay__tags span {
+  font-size: 10px;
+    padding: 4px 8px;
+  padding: 5px 10px;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  margin: 0 0 0 10px;
+}
 
-
+.overlay__title  {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  max-width: 75%;
+}
+.overlay__border {
+  margin: 1rem;
+}
 .btn {
   margin:  15px 15px 15px 0;
   height: 30px;
