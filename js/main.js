@@ -10,6 +10,20 @@ $('.gallery').on('click', '.item', (e) => {
     loadPost(e.currentTarget)
 })
 
+
+$('.nav__link').on('click', (e) => {
+  let filter = $(e.currentTarget).data('filter');
+  $('.nav__link').removeClass('nav__link--active');
+  $(e.currentTarget).addClass('nav__link--active');
+  $('.gallery').empty()
+  if(filter === 'trending'){
+    getTrending()
+  } else {
+    getLatest()
+  }
+})
+
+
 getTrending()
 
 function getTrending(){

@@ -64,6 +64,20 @@ body {
   padding: 45px 0 15px;
 }
 
+.nav__link {
+  margin: 0 15px;
+  color: #7b7b7b;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  font-size: 14px;
+}
+.nav__link--active {
+  padding-bottom: 2px;
+  border-bottom: solid 2px #333;
+  color: #333
+}
+
 
 .gallery {
   max-width: 100%;
