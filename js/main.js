@@ -74,9 +74,10 @@ function getMoreContent(){
 
               $item.children('img').on('load', (e) => {
                 $(e.currentTarget).parent().removeClass('hidden')
-                $gallery.masonry( 'appended', $(e.currentTarget).parent() )
+                $gallery.masonry( 'appended', $(e.currentTarget).parent())
               })
           })
+          setInfiniteScrollPoint()
       }
 
       if(filter === 'trending'){
@@ -171,6 +172,16 @@ function initMasonry(images){
     columnWidth: '.item',
     gutter: 16,
     percentPosition: true
+  });
+  setInfiniteScrollPoint()
+}
+
+function setInfiniteScrollPoint(){
+  $('.item').last().on('inview', function(event, isInView) {
+    if (isInView) {
+      getMoreContent()
+      $('.item').last().off('inview')
+    }
   });
 }
 
