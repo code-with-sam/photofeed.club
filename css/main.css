@@ -100,9 +100,8 @@ body {
 
 .item__image {
   max-width: 100%;
+  min-width: 100%;
 }
-
-
 
 .item {
   opacity: 1;
@@ -355,4 +354,15 @@ main {
 .btn--large {
   font-size: 20px;
   padding: 4px 16px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+  background: #fff;
+  text-align: center;
+  padding: 15px 5px 10px ;
+  font-size: 12px;
 }
