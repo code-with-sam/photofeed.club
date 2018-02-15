@@ -166,7 +166,9 @@ function checkImages(items){
 
 function initMasonry(images){
   images.parent().removeClass('hidden')
-  $gallery.masonry('destroy')
+
+  if( $('.gallery').data('masonry') ) $gallery.masonry('destroy')
+
   $gallery.masonry({
     itemSelector: '.item',
     columnWidth: '.item',
