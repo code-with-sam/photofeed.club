@@ -1,5 +1,5 @@
 
-let query = { 'tag': 'photofeed', 'limit': 28 }
+let query = { 'tag': 'photofeed', 'limit': 6 }
 let converter = new showdown.Converter({ tables: true })
 let allContent = []
 let allUsers = []
@@ -63,7 +63,7 @@ function getMoreContent(){
   let query = {
       'tag':
       'photofeed',
-      'limit': 35,
+      'limit': 24,
       start_author: lastItem.author,
       start_permlink: lastItem.permlink }
 
