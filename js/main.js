@@ -22,6 +22,8 @@ $('.nav__link').on('click', (e) => {
 
   if(filter === 'trending'){
     getTrending(query, true)
+  } else if (filter === 'featured') {
+    getFeatured(query, true)
   } else {
     getLatest(query, true)
   }
@@ -31,7 +33,17 @@ $('.more').on('click', ()=> {
   getMoreContent()
 })
 
-
+function getFeatured(query, initial, callback){
+  steem.api.getDiscussionsByBlog(query, (err, result) => {
+    const featuredPosts = result.filter( post => post.author !== 'photofeed')
+    if (err === null) {
+      displayImages(featuredPosts, initial, initial ? false : callback)
+      getaccounts(result.map(post => post.author))
+    } else {
+      console.log(err);
+    }
+  });
+}
 
 function getTrending(query, initial, callback){
 
@@ -81,10 +93,10 @@ function getMoreContent(){
       }
 
       if(filter === 'trending'){
-        console.log(`getting more ${filter}`)
         getTrending(query, false, callback)
-      } else {
-        console.log(`getting more ${filter}`)
+      } else if (filter === 'featured') {
+        getFeatured(query, false, callback)
+      } else  {
         getLatest(query, false, callback)
       }
 }
