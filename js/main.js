@@ -1,12 +1,12 @@
 
-let query = { 'tag': 'photofeed', 'limit': 6 }
+let query = { 'tag': 'photofeed', 'limit': 7 }
 let converter = new showdown.Converter({ tables: true })
 let allContent = []
 let allUsers = []
 let msnry;
 let $gallery = $('.gallery')
 
-getTrending(query, true)
+getFeatured(query, true)
 
 $('.gallery').on('click', '.item', (e) => {
     loadPost(e.currentTarget)
