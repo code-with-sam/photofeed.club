@@ -132,7 +132,7 @@ function displayImages(result, initialLoad, callback){
       allContent.push(post);
       let itemTemplate = `
         <div class="item hidden" data-url="${post.url}" data-permlink="${ post.permlink }">
-          <img class="item__image " src="https://steemitimages.com/480x768/${image}" onerror="">
+          <img class="item__image " src="https://steemitimages.com/480x768/${image}" onerror="this.src='http://placehold.it/500x500'">
           <div class="item__photographer">
             <span>@${post.author}</span>
           </div>
@@ -156,8 +156,8 @@ function displayImages(result, initialLoad, callback){
 function genImageInHTML(markdown){
     let placeholder = document.createElement('div');
     placeholder.innerHTML = converter.makeHtml(markdown)
-    let image = placeholder.querySelector('img') ;
-    return image.src
+    let image = placeholder.querySelector('img');
+    return image ? image.src : ''
 }
 
 function checkImages(items){
