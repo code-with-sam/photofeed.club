@@ -12,6 +12,13 @@ $('.gallery').on('click', '.item', (e) => {
     loadPost(e.currentTarget)
 })
 
+$('.faq').on('click', (e) => {
+    e.preventDefault()
+    lastTop = $(window).scrollTop();
+console.log('faq')
+    $('body').addClass( 'noscroll' ).css( { top: -lastTop } )
+    $('.overlay, .overlay__faq, .overlay__bg').addClass('overlay--active')
+})
 
 $('.nav__link').on('click', (e) => {
   let filter = $(e.currentTarget).data('filter');
@@ -92,6 +99,7 @@ function getMoreContent(){
           setInfiniteScrollPoint()
       }
 
+      console.log(`getting more ${filter}`)
       if(filter === 'trending'){
         getTrending(query, false, callback)
       } else if (filter === 'featured') {
@@ -254,7 +262,7 @@ function loadPost(item) {
   let comments = `<section class="finally-comments" data-id="https://steemit.com/${post.url}" data-reputation="true" data-values="true" data-profile="true"></section>`
   $('.overlay__content').empty()
   $('.overlay__content').append(header + html + comments)
-  $('.overlay, .overlay__bg').addClass('overlay--active')
+  $('.overlay, .overlay__bg, .overlay__content').addClass('overlay--active')
 
   finallyCommentsSystem.init()
   $('.overlay').scrollTop(0)
@@ -263,5 +271,5 @@ function loadPost(item) {
 $('.overlay__bg').on('click', () => {
   $('body').removeClass('noscroll')
   $(window).scrollTop( lastTop );
-  $('.overlay, .overlay__bg').removeClass('overlay--active')
+  $('.overlay, .overlay__bg, .overlay__content, .overlay__faq').removeClass('overlay--active')
 })
