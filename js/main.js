@@ -7,6 +7,7 @@ let msnry;
 let $gallery = $('.gallery')
 
 getFeatured(query, true)
+getFeaturedPhotograpers()
 
 $('.gallery').on('click', '.item', (e) => {
     loadPost(e.currentTarget)
@@ -15,9 +16,15 @@ $('.gallery').on('click', '.item', (e) => {
 $('.faq').on('click', (e) => {
     e.preventDefault()
     lastTop = $(window).scrollTop();
-console.log('faq')
     $('body').addClass( 'noscroll' ).css( { top: -lastTop } )
     $('.overlay, .overlay__faq, .overlay__bg').addClass('overlay--active')
+})
+
+$('.photographers').on('click', (e) => {
+    e.preventDefault()
+    lastTop = $(window).scrollTop();
+    $('body').addClass( 'noscroll' ).css( { top: -lastTop } )
+    $('.overlay, .overlay__photographers, .overlay__bg').addClass('overlay--active')
 })
 
 $('.nav__link').on('click', (e) => {
@@ -36,9 +43,62 @@ $('.nav__link').on('click', (e) => {
   }
 })
 
-$('.more').on('click', ()=> {
-  getMoreContent()
+$('.overlay__photographers').on('mouseover', 'img',(e) => {
+  let username = $(e.currentTarget).data('username')
+  let pos = $(e.currentTarget).offset()
+  let containerPos = $('.overlay__photographers').offset()
+
+  $(`<div class="poptag" style="top: ${ pos.top - containerPos.top + 20 }px; left: ${pos.left - containerPos.left + 20 }px;">@${username}</div>`).insertAfter(e.currentTarget)
+  $('.overlay__photographers img').css('opacity', 0.75)
 })
+$('.overlay__photographers').on('mouseout', 'img',(e) => {
+  $('.poptag').remove()
+  $('.overlay__photographers img').css('opacity', 1)
+
+})
+
+$('.overlay__bg').on('click', () => {
+  $('body').removeClass('noscroll')
+  $(window).scrollTop( lastTop );
+  $('.overlay, .overlay__bg, .overlay__content, .overlay__faq .overlay__photographers').removeClass('overlay--active')
+})
+
+function getFeaturedPhotograpers(){
+  let query = { 'tag': 'photofeed', 'limit': 100 }
+  steem.api.getDiscussionsByBlog(query, (err, result) => {
+    if (err === null) {
+      const featuredPosts = result.filter( post => post.author !== 'photofeed')
+      const featuredPhotographers = featuredPosts.map(post => post.author)
+      const uniquePhotographers = uniqueArray(featuredPhotographers)
+
+      steem.api.getAccounts(uniquePhotographers, (err, result) => {
+
+        result.forEach((user) => {
+          let json;
+          try {
+            json = JSON.parse(user.json_metadata).profile
+          } catch(err) { console.log(err) }
+
+          if (json){
+            try {
+              let img = json.profile_image
+              let template = `
+              <a href="https://steemit.com/@${user.name}" target="_blank">
+              <img data-username="${user.name}"
+                  src="${img}" width="40px" height="40px"
+                  onerror="this.style.display = 'none'">
+              </a>`
+              $('.overlay__photographers').append(template)
+            } catch(err) { console.log(err) }
+          }
+        })
+      })
+
+    } else {
+      console.log(err);
+    }
+  });
+}
 
 function getFeatured(query, initial, callback){
   steem.api.getDiscussionsByBlog(query, (err, result) => {
@@ -99,7 +159,6 @@ function getMoreContent(){
           setInfiniteScrollPoint()
       }
 
-      console.log(`getting more ${filter}`)
       if(filter === 'trending'){
         getTrending(query, false, callback)
       } else if (filter === 'featured') {
@@ -212,7 +271,6 @@ function loadPost(item) {
   let rawPost = allContent.filter( x  => x.permlink === post.permlink )[0]
   let allCopy = allUsers.map(x => Object.assign({}, x))
   let user = allCopy.filter( x  => x.name === rawPost.author )[0]
-  console.log('META: ', user.json_metadata)
 
   let profileImage = 'img/default-user.jpg';
 
@@ -268,8 +326,8 @@ function loadPost(item) {
   $('.overlay').scrollTop(0)
 }
 
-$('.overlay__bg').on('click', () => {
-  $('body').removeClass('noscroll')
-  $(window).scrollTop( lastTop );
-  $('.overlay, .overlay__bg, .overlay__content, .overlay__faq').removeClass('overlay--active')
-})
+function uniqueArray(arrArg) {
+  return arrArg.filter(function(elem, pos,arr) {
+    return arr.indexOf(elem) == pos;
+  });
+};
