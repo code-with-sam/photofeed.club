@@ -7,7 +7,7 @@ let msnry;
 let $gallery = $('.gallery')
 
 getFeatured(query, true)
-getFeaturedPhotograpers()
+// getFeaturedPhotograpers()
 
 $('.gallery').on('click', '.item', (e) => {
     loadPost(e.currentTarget)
@@ -20,12 +20,12 @@ $('.faq').on('click', (e) => {
     $('.overlay, .overlay__faq, .overlay__bg').addClass('overlay--active')
 })
 
-$('.photographers').on('click', (e) => {
-    e.preventDefault()
-    lastTop = $(window).scrollTop();
-    $('body').addClass( 'noscroll' ).css( { top: -lastTop } )
-    $('.overlay, .overlay__photographers, .overlay__bg').addClass('overlay--active')
-})
+// $('.photographers').on('click', (e) => {
+//     e.preventDefault()
+//     lastTop = $(window).scrollTop();
+//     $('body').addClass( 'noscroll' ).css( { top: -lastTop } )
+//     $('.overlay, .overlay__photographers, .overlay__bg').addClass('overlay--active')
+// })
 
 $('.nav__link').on('click', (e) => {
   let filter = $(e.currentTarget).data('filter');

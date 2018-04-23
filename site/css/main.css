@@ -410,6 +410,11 @@ main {
   font-size: 20px;
   padding: 4px 16px;
 }
+.btn.is-active {
+  border: solid 1px #000000;
+  color: #000000;
+  background: #f6f6f6;
+}
 
 footer {
   position: fixed;
