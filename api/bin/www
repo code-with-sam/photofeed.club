@@ -7,6 +7,9 @@
 var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');
+let db = require('../modules/db')
+let config = require('../config');
+const databaseURL = `mongodb://${config.db.user}:${config.db.password}@ds253959.mlab.com:53959/photofeed`;
 
 /**
  * Get port from environment and store in Express.
@@ -25,9 +28,17 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+ db.connect(databaseURL, (err) => {
+    if (err) {
+      console.log('Unable to connect to Mongo.')
+      process.exit(1)
+    } else {
+      console.log('Connected to photofeed Datbase...')
+      server.listen(port);
+      server.on('error', onError);
+      server.on('listening', onListening);
+    }
+  })
 
 /**
  * Normalize a port into a number, string, or false.
