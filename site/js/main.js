@@ -59,9 +59,6 @@ $('.overlay__bg').on('click', () => {
 })
 
 function getPhotographers(){
-  // $.getJSON('https://server-fbvwmcnoxz.now.sh/', function(e,r){
-  //   console.log(e,r)
-  // })
   $.ajax({
     url: 'https://photofeed-photographers-ourxcnqzhl.now.sh/',
     type: "GET",
@@ -86,10 +83,7 @@ function displayPhotogaphers(photographers){
       return 0;
     }
   });
-
   photographers.shift()
-  console.log(photographers);
-
 
   for (var i = 0; i < 8; i++) {
     appendPhotogapher(photographers[i], '.photogaphers__top')
