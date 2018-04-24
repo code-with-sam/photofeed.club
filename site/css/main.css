@@ -149,10 +149,10 @@ h3 {
   transition: opacity 300ms ease-in-out;
     z-index: 10;
     position: absolute;
-    bottom: 0;
+    bottom: 6px;
     height: 55px;
     width: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0), #2f2f2fa1);
+    background: linear-gradient(rgba(0, 0, 0, 0), #343434);
 }
 
 .item__photographer {
