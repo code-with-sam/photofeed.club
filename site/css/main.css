@@ -3,9 +3,11 @@
 }
 body {
   font-family: -apple-system,BlinkMacSystemFont,San Francisco,Helvetica Neue,Helvetica,Ubuntu,Roboto,Noto,Segoe UI,Arial,sans-serif;
-  word-break: break-all;
 }
 
+a {
+    word-break: break-all;
+}
 h2 {
   font-size: 24px;
   font-weight: 700;
