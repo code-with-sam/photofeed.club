@@ -405,3 +405,80 @@ footer {
   padding: 15px 5px 10px ;
   font-size: 12px;
 }
+
+
+.gallery__photographers h2 {
+  text-align: center;
+}
+.photogaphers__top,
+.photogaphers__all {
+  margin-bottom: 30px;
+}
+.photogapher__single {
+  width: 25%;
+  float: left;
+  padding: 30px;
+  border: solid 1px transparent;
+  border-radius: 5px;
+  transition: all 300ms ease-in;
+  position: relative;
+}
+
+@media(max-width: 1240px){
+  .photogapher__single {
+    width: 33.33%;
+  }
+}
+
+@media(max-width: 840px){
+  .photogapher__single {
+    width: 50%;
+  }
+}
+
+@media(max-width: 680px){
+  .photogapher__single {
+    width: 100%;
+  }
+}
+
+
+.photogapher__single:hover {
+  border: solid 1px #cdd3df;
+  cursor: pointer;
+  background: #f8f8f8;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.photogapher__info {
+  float: left;
+  padding-left: 15px;
+}
+.photogapher__link {
+  opacity: 0;
+  position: absolute;
+  right: 15px;
+  top: 45px;
+  transition: all 300ms ease-in;
+}
+.photogapher__link svg {
+  width: 35px;
+  stroke: #cdd3df;
+}
+.photogapher__single:hover .photogapher__link{
+  opacity: 1;
+}
+.photogapher__avatar {
+  float: left;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
+
+.photogapher__username,
+.photogapher__posts,
+.photogapher__featured,
+.photogapher__link {
+    font-size: 14px;
+    margin: 0;
+}
