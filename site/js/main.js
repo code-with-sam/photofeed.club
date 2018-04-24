@@ -5,6 +5,7 @@ let allContent = []
 let allUsers = []
 let msnry;
 let $gallery = $('.gallery')
+let params, photographer;
 
 if ( $('main').hasClass('feeds') ) {
   getFeatured(query, true)
@@ -12,6 +13,15 @@ if ( $('main').hasClass('feeds') ) {
 
 if ( $('main').hasClass('photographers') ) {
   getPhotographers()
+}
+
+if ( $('main').hasClass('profile') ) {
+  params = (new URL(document.location)).searchParams;
+  photographer = params.get('photographer');
+  $('.nav__link--active').text(`Photos by @${photographer}`)
+  $('.nav__link--active').attr('href', `https://steemit.com/@${photographer}`)
+  query = { 'tag': photographer, 'limit': 14 }
+  getBlog(query, true)
 }
 
 
@@ -91,6 +101,7 @@ function displayPhotogaphers(photographers){
 
 function appendPhotogapher(photogapher, location) {
   let template = `<div class="photogapher__single cf">
+    <a href="profile.html?photographer=${photogapher.username}">
     <img class="photogapher__avatar" src="${photogapher.avatar}" onerror="this.onerror=null;this.src='http://placehold.it/50x50?text=?';">
     <div class="photogapher__info">
       <h3 class="photogapher__username" >@${photogapher.username}</h3>
@@ -107,6 +118,7 @@ function appendPhotogapher(photogapher, location) {
       </g>
       </svg>
     </div>
+    </a>
   </div>`
   $(location).append(template)
 }
@@ -148,6 +160,21 @@ function getLatest(query, initial, callback){
   });
 }
 
+function getBlog(query, initial, callback){
+  steem.api.getDiscussionsByBlog(query, (err, result) => {
+    if (err === null) {
+      result = result.filter(post => {
+        let tags = JSON.parse(post.json_metadata).tags
+        if( tags.includes('photofeed') ) return post
+      })
+      displayImages(result, initial, initial ? false : callback)
+      getaccounts(result.map(post => post.author))
+    } else {
+      console.log(err);
+    }
+  });
+}
+
 function getMoreContent(){
   let lastItem = allContent[allContent.length - 1]
   let filter = $('.nav__link--active').data('filter')
@@ -175,9 +202,18 @@ function getMoreContent(){
         getTrending(query, false, callback)
       } else if (filter === 'featured') {
         getFeatured(query, false, callback)
-      } else  {
+      } else if (filter === 'latest')  {
         getLatest(query, false, callback)
+      } else {
+        query = {
+            'tag':
+            photographer,
+            'limit': 24,
+            start_author: lastItem.author,
+            start_permlink: lastItem.permlink }
+        getBlog(query, false, callback)
       }
+
 }
 
 
@@ -321,7 +357,8 @@ function loadPost(item) {
       <img class="overlay__author-img" width="35" height="35" src="${profileImage}">
       <div class="overlay__author-info">
         <span class="overlay__author-name">${( user.json_metadata.name ?  user.json_metadata.name : user.name ) }</span>
-        <span class="overlay__author-username">@${user.name}</span>
+        <a href="profile.html?photographer=${user.name}"class="overlay__author-username">@${user.name}</a>
+
       </div>
     </div>
     <div class="overlay__tags">${tags}</div>
