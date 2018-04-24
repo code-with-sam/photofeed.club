@@ -425,6 +425,9 @@ footer {
   transition: all 300ms ease-in;
   position: relative;
 }
+.photogapher__single a {
+  color: #3f3f3f;
+}
 
 @media(max-width: 1240px){
   .photogapher__single {
