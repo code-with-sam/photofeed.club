@@ -1,0 +1,64 @@
+Photofeed Frequently Asked Questions
+This Frequently Asked Question will be continually updated to accommodate new information with respect to new updates and changes on the Website and will be used inside the Website to help users find answers to their questions.
+
+What is Photofeed?
+
+Photofeed is the first professional photography website built on the Steem Blockchain which rewards users in Steem or Steem Dollars currencies. This website is aimed at users who are interested in seeing professional photography on Steemit.com. This website allows the users to have access to only photography posts without interruption through a very beautiful interface. 
+
+Who made photofeed.club?
+The website https://photofeed.club was developed and is maintained by @sambillingham. The site is unoffical and has not been endorsed by the @photofeed project admins.
+How do I get involved?
+Photofeed is a project on the Steem blockchain, with the primary interfaces being Steemit.com and Busy.org. You can sign up here. Anyone can post to the #photofeed hastag as long as you are the original photographer and have the rights to publish the photo.
+Note that #photofeed is intended to showcase high quality photographs. Please consider if your image is relevant before post.
+How do I create a Photofeed account?
+
+Account creation is not necessary in Photofeed. To gain access to Photofeed, one must possess a Steemit account. Since Photofeed is connected to Steemit, only your Steemit username and password is required to log through SteemConnect. 
+
+How do I log into PhotoFeed?
+
+Clicking the login button in any opened photography post redirects the user to Steemconnect v2 to authenticate to the Steem Blockchain where the user will provide a username and password.
+
+What is Steemit.com?
+
+Steemit.com is a blockchain-based social media platform where anyone can earn rewards by blogging, posting videos and images, commenting and interacting with authors. The steem blockchain not only holds earned cryptocurrency tokens called STEEM and STEEM DOLLARS, but also content (article, video, music, pictures etc) created by its users, a system to vote on that content, receive rewards in addition to other features you would find on popular social networking site.
+
+What is the relationship between Photofeed and Steemit.com?
+
+Photofeed is built on the same blockchain as Steemit.com i.e Steem Blockchain. However, only professional photography posts created on the Steemit website can be found on Photofeed website. You are also able to view the Trending, Latest and Featured photography posts on Photofeed. You can also get access to featured photographers and the number of posts they have featured on the site. Other options you have access to is the comment and upvoting option just like in the Steemit website. 
+
+What is the difference between trending & featured?
+Trending page uses Steemit’s calculation for trending posts, a combination of recent photography posts and payout value. Featured page shows the daily chosen photos by the @photofeed admins.
+
+Can I change my username?
+
+Photofeed is based on the Steem-Blockchain, therefore, your username on Steemit.com is your username on Photofeed. However, since it is impossible to change your username on Steemit.com, your username can't be changed on Photofeed.
+
+
+What if I lose my password?
+
+We only accept private key generated on Steemit.com. If by any case you forget or lose your private key as a result of tampering with your Steemit.com, you will have to contact Steemit.com for help.
+
+
+Is my personal information safe?
+
+Your information is safe. Note that we do not store your keys at all, hence, we do not have any information that would compromise or jeopardize our website users directly or indirectly.
+
+
+Is Photofeed safe?
+
+Yes, Photofeed is absolutely safe. We try to provide the safest environment for our users. We use https encryption and the latest version of scripts.
+
+What are the rewards?
+The @photofeed account admins choose five photos each day to be featured. Featured photos receive a resteem and 30% upvote from @cryptoctopus along with an equal share of the daily roundup post rewards one week later.
+
+What currency am I paid in?
+
+Photofeed runs on the Steem Blockchain thus making use of Steem and Steem Dollars as modes of payment.
+
+
+Where can I leave feedbacks or suggestions or report bugs?
+
+You can report them directly on: 
+
+Our GitHub issue page - https://github.com/code-with-sam/photofeed.club/issues
+Steemit page -  https://steemit.com/@sambillingham 
