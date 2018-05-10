@@ -3,14 +3,11 @@ extends layout
 block content
     include partials/header
 
-    <main class="photographers">
-      <section class="gallery gallery__photographers">
-        <h2>Most Featured Photographers</h2>
-        <div class="photogaphers__top container cf"></div>
-        <h2>Over 187 Photographers have been selected</h2>
-        <div class="photogaphers__all cf"></div>
-      </section>
+    main.photographers
+      section.gallery.gallery__photographers
+        h2 Most Featured Photographers
+        .photogaphers__top.container.cf
+          h2 Over 187 Photographers have been selected
+        .photogaphers__all.cf
       include partials/overlay
-
-    </main>
     include partials/footer

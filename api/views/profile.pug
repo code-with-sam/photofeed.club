@@ -3,13 +3,10 @@ extends layout
 block content
     include partials/header
 
-    <main class="profile">
-      <section class="nav">
-        <a class="nav__link nav__link--active" data-filter="blog"></a>
-      </section>
-      <section class="profile__header"></section>
-      <section class="gallery gallery__profile"></section>
+    main.profile
+      section.nav
+        a(class="nav__link nav__link--active" data-filter="blog")
+      section.profile__header
+      section.gallery.gallery_profile
       include partials/overlay
-
-    </main>
     include partials/footer

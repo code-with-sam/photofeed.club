@@ -2,14 +2,11 @@ extends layout
 
 block content
     include partials/header
-    <main class="feeds">
-      <section class="nav">
-        <a class="nav__link nav__link" data-filter="trending" href="#trending">Trending</a>
-        <a class="nav__link nav__link--active" data-filter="featured" href="#featured">Featured</a>
-        <a class="nav__link" data-filter="latest" href="#lastest">Latest</a>
-      </section>
-      <section class="gallery"></section>
+    main.feeds
+      section.nav
+        a(class="nav__link nav__link" data-filter="trending" href="#trending") Trending
+        a(class="nav__link nav__link--active" data-filter="featured" href="#featured") Featured
+        a(class="nav__link" data-filter="latest" href="#lastest") Latest
+      section.gallery
       include partials/overlay
-
-    </main>
     include partials/footer
