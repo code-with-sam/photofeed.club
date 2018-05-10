@@ -16,8 +16,7 @@ if ( $('main').hasClass('photographers') ) {
 }
 
 if ( $('main').hasClass('profile') ) {
-  params = (new URL(document.location)).searchParams;
-  photographer = params.get('photographer');
+  let photographer = $('.profile').data('username')
   $('.nav__link--active').text(`Photos by @${photographer}`)
   $('.nav__link--active').attr('href', `https://steemit.com/@${photographer}`)
   query = { 'tag': photographer, 'limit': 14 }
@@ -95,7 +94,7 @@ function displayPhotogaphers(photographers){
 
 function appendPhotogapher(photogapher, location) {
   let template = `<div class="photogapher__single cf">
-    <a href="profile.html?photographer=${photogapher.username}">
+    <a href="/@${photogapher.username}">
     <img class="photogapher__avatar" src="${photogapher.avatar}" onerror="this.onerror=null;this.src='http://placehold.it/50x50?text=?';">
     <div class="photogapher__info">
       <h3 class="photogapher__username" >@${photogapher.username}</h3>
