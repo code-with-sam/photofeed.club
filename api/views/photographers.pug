@@ -1,37 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>#PhotoFeed</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
-    <link rel="stylesheet" href="css/main.css">
-  </head>
-  <body>
-    <nav class="topbar">
-      <span class="topbar__brand" >#PhotoFeed</span>
-      <a class="topbar__cta btn btn--primary" href="https://signup.steemit.com/">Join Steem</a>
-      <a class="topbar__cta btn btn--secondary faq" href="#">FAQ</a>
-      <a class="topbar__cta btn btn--secondary is-active" href="photographers.html">Photographers</a>
-      <a class="topbar__cta btn btn--secondary" href="index.html">Feeds</a>
-    </nav>
-    <header class="header">
-      <h1 class="header__title">Welcome To #PhotoFeed</h1>
-      <h2 class="header__sub-title">Premier Professional Photography On the Steem Blockchain</h2>
+extends layout
 
-      <div class="header__people">
-      </div>
-      <div class="header__learn">
-      </div>
-    </header>
+block content
+    include partials/header
 
     <main class="photographers">
       <section class="gallery gallery__photographers">
         <h2>Most Featured Photographers</h2>
-        <div class="photogaphers__top container cf">
-
-        </div>
-
+        <div class="photogaphers__top container cf"></div>
         <h2>Over 187 Photographers have been selected</h2>
         <div class="photogaphers__all cf"></div>
       </section>
@@ -61,21 +36,4 @@
       </section>
 
     </main>
-    <footer>
-      <p>
-        Website by <a href="http://steemit.com/@sambillingham">Sam Billingham</a> for <a href="https://steemit.com/@photofeed">#Photofeed</a>, a community project by <a href="https://steemit.com/@jrue">@jrue</a>, <a href="https://steemit.com/@aweber">@aweber</a>, <a href="https://steemit.com/@yumyumseth">@yumyumseth</a> and <a href="https://steemit.com/@Cryptoctopus">@Cryptoctopus</a>.
-      </p>
-    </footer>
-
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/protonet-jquery.inview/1.1.2/jquery.inview.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-    <script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
-    <script src="/js/vendor/finally-custom.js"></script>
-    <script src="/js/main.js"></script>
-  </body>
-</html>
+    include partials/footer
