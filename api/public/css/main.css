@@ -416,6 +416,10 @@ footer {
 .photogaphers__all {
   margin-bottom: 30px;
 }
+
+.photogaphers__all {
+  margin-bottom: 60px;
+}
 .photogapher__single {
   width: 25%;
   float: left;
