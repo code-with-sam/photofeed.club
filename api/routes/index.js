@@ -12,7 +12,7 @@ router.get('/photographers', function(req, res, next) {
   res.render('photographers')
 })
 
-router.get('/@username', function(req, res, next) {
+router.get('/@:username', function(req, res, next) {
   let username = req.params.username
   res.render('profile',{username})
 })
