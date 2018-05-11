@@ -1,10 +1,10 @@
 const steem = require('steem')
-const db = require('./modules/db')
+const db = require('./db')
 const _ = require('lodash')
-const INTERVAL = 1000 * 60 * 60 * 1 // 1 Hour
+const INTERVAL = 1000 * 20 * 1 * 1 // 1 Hour
 
-let config = require('./config');
-const databaseURL = `mongodb://${config.db.user}:${config.db.password}@ds119150.mlab.com:19150/photofeed2`;
+let config = require('../config');
+// const databaseURL = `mongodb://${config.db.user}:${config.db.password}@ds119150.mlab.com:19150/photofeed2`;
 
 // db.get().db('photofeed2').grantRolesToUser(
 //     "photofeed",
@@ -13,20 +13,21 @@ const databaseURL = `mongodb://${config.db.user}:${config.db.password}@ds119150.
 //     ]
 // )
 
-db.connect(databaseURL, (err) => {
-   if (err) {
-     console.log('Unable to connect to Mongo.')
-     process.exit(1)
-   } else {
-     console.log('Connected to photofeed Datbase...')
+// db.connect(databaseURL, (err) => {
+//    if (err) {
+//      console.log('Unable to connect to Mongo.')
+//      process.exit(1)
+//    } else {
+//      console.log('Connected to photofeed Datbase...')
+//    }
+//  })
+//
+//
 
-     setInterval(updateDatabase, INTERVAL)
-   }
- })
-
-
-function updateDatabase(){
-  storeLatestPhotoFeedPosts().then(data => updateFeaturedCount())
+module.exports.update = () => {
+  setInterval(() => {
+    storeLatestPhotoFeedPosts().then(data => updateFeaturedCount())
+  }, INTERVAL)
 }
 
 function updateFeaturedCount() {
@@ -82,11 +83,14 @@ function getFeaturedPhotographerTotals() {
 }
 
 function storeLatestPhotoFeedPosts(){
-  getPhotoFeedBlogEntries().then(posts => {
-    for (var i = 0; i < posts.length; i++) {
-      db.get().db('photofeed2').collection('posts').update({entry_id: posts[i].entry_id } ,uniqueBlogEntries[i], { upsert: true }, (error, response) => {
-        if(error || response == null) console.log(error)
-      })
-    }
-  })
+  return new Promise(function(resolve, reject) {
+    getPhotoFeedBlogEntries().then(posts => {
+      for (var i = 0; i < posts.length; i++) {
+        db.get().db('photofeed2').collection('posts').update({entry_id: posts[i].entry_id } ,posts[i], { upsert: true }, (error, response) => {
+          if(error || response == null) console.log(error)
+        })
+      }
+    })
+    resolve()
+  });
 }
