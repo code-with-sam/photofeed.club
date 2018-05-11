@@ -4,25 +4,6 @@ const _ = require('lodash')
 const INTERVAL = 1000 * 60 * 60 * 1 // 1 Hour
 
 let config = require('../config');
-// const databaseURL = `mongodb://${config.db.user}:${config.db.password}@ds119150.mlab.com:19150/photofeed2`;
-
-// db.get().db('photofeed2').grantRolesToUser(
-//     "photofeed",
-//     [
-//       { role: "read", db: "photofeed2" }
-//     ]
-// )
-
-// db.connect(databaseURL, (err) => {
-//    if (err) {
-//      console.log('Unable to connect to Mongo.')
-//      process.exit(1)
-//    } else {
-//      console.log('Connected to photofeed Datbase...')
-//    }
-//  })
-//
-//
 
 module.exports.update = () => {
   setInterval(() => {
