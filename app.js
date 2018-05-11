@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 let db = require('./modules/db')
+let featuredPhotogaphers = require('./modules/featured-photogaphers')
 
 var app = express();
 
@@ -41,5 +42,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Start script to schedule database update
+featuredPhotogaphers.update()
 
 module.exports = app;

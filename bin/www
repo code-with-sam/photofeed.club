@@ -9,7 +9,7 @@ var debug = require('debug')('server:server');
 var http = require('http');
 let db = require('../modules/db')
 let config = require('../config');
-const databaseURL = `mongodb://${config.db.user}:${config.db.password}@ds253959.mlab.com:53959/photofeed`;
+const databaseURL = `mongodb://${config.db.user}:${config.db.password}@ds119150.mlab.com:19150/photofeed2`;
 
 /**
  * Get port from environment and store in Express.
