@@ -412,13 +412,26 @@ footer {
 .gallery__photographers h2 {
   text-align: center;
 }
-.photogaphers__top,
-.photogaphers__all {
+.photographers__top,
+.photographers__all {
   margin-bottom: 30px;
 }
 
-.photogaphers__all {
+.photographers__all {
+  display: none;
   margin-bottom: 60px;
+}
+.photographers__show {
+  text-align: center;
+  border: solid 2px;
+  padding: 4px 8px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 60px;
+  width: 120px;
+  border-radius: 5px;
+  background: #f6f6f6;
+  cursor: pointer;
 }
 .photogapher__single {
   width: 25%;

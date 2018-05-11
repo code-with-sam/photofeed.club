@@ -57,6 +57,20 @@ $('.overlay__bg').on('click', () => {
   $('.overlay, .overlay__bg, .overlay__content, .overlay__faq .overlay__photographers').removeClass('overlay--active')
 })
 
+
+
+$('.overlay__bg').on('click', () => {
+  $('body').removeClass('noscroll')
+  $(window).scrollTop( lastTop );
+  $('.overlay, .overlay__bg, .overlay__content, .overlay__faq .overlay__photographers').removeClass('overlay--active')
+})
+
+
+$('.photographers__show').on('click', () => {
+  $('.photographers__all').fadeIn()
+  $('.photographers__show').fadeOut()
+})
+
 function getPhotographers(){
   $.ajax({
     url: '/photographers.json',
@@ -84,11 +98,12 @@ function displayPhotogaphers(photographers){
   });
   photographers.shift()
 
+  $('.total-photographers').text(photographers.length)
   for (var i = 0; i < 8; i++) {
-    appendPhotogapher(photographers[i], '.photogaphers__top')
+    appendPhotogapher(photographers[i], '.photographers__top')
   }
   for (var i = 8; i < photographers.length; i++) {
-    appendPhotogapher(photographers[i], '.photogaphers__all')
+    appendPhotogapher(photographers[i], '.photographers__all')
   }
 }
 

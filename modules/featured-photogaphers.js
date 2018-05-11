@@ -46,6 +46,7 @@ function processAllAuthorData(uniqueAuthors, numberOfFeaturedPosts){
 }
 
 function storeFeaturedCount(data){
+  db.get().db('photofeed2').collection('photographers').remove({})
   for (var i = 0; i < data.length; i++) {
     db.get().db('photofeed2').collection('photographers').update( { username: data.username }, data[i], { upsert: true },(error, response) => {
       if(error || response == null) { console.log(error) }
