@@ -59,7 +59,7 @@ $('.overlay__bg').on('click', () => {
 
 function getPhotographers(){
   $.ajax({
-    url: 'https://photofeed-photographers-ourxcnqzhl.now.sh/',
+    url: '/photographers.json',
     type: "GET",
     dataType: "json",
     success: function (data) {

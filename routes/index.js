@@ -19,7 +19,7 @@ router.get('/@:username', function(req, res, next) {
 /* GET photographers. */
 router.get('/photographers.json', function(req, res, next) {
   console.log('index')
-  db.get().db('photofeed').collection('photographers').find().toArray( (error, result) => {
+  db.get().db('photofeed2').collection('photographers').find().toArray( (error, result) => {
     console.log('result', result)
     if(error || result == null) { console.log(error) }
     else { res.json({result: result}) }
