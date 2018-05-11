@@ -408,6 +408,16 @@ footer {
   font-size: 12px;
 }
 
+.photographers__top, .photographers__latest {
+  float: left;
+  width: 50%;
+}
+.photographers__top h2 , .photographers__latest h2 {
+  text-align: center;
+}
+.photographers__highlight .photogapher__single {
+  width: 50%;
+}
 
 .gallery__photographers h2 {
   text-align: center;

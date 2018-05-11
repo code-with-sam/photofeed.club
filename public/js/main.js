@@ -98,12 +98,30 @@ function displayPhotogaphers(photographers){
   });
   photographers.shift()
 
+  steem.api.getDiscussionsByBlog( { 'tag': 'photofeed', 'limit': 10 }, (err, result) => {
+    if (err) return console.log(err)
+    const featuredPosts = result.filter( post => post.author !== 'photofeed')
+    for (var i = 0; i < 6; i++) {
+      console.log(featuredPosts[i])
+      let index = photographers.findIndex(photographer => photographer.username === featuredPosts[i].author)
+      console.log(index)
+      // if (index >= 0) {
+        let photog = photographers[index]
+
+        console.log(photog)
+        appendPhotogapher(photog, '.photographers__latest')
+      // }
+
+    }
+  });
+
+
   $('.total-photographers').text(photographers.length)
-  for (var i = 0; i < 8; i++) {
+  for (var i = 0; i < 6; i++) {
     appendPhotogapher(photographers[i], '.photographers__top')
   }
-  for (var i = 8; i < photographers.length; i++) {
-    appendPhotogapher(photographers[i], '.photographers__all')
+  for (var i = 6; i < photographers.length; i++) {
+    // appendPhotogapher(photographers[i], '.photographers__all')
   }
 }
 
@@ -113,7 +131,6 @@ function appendPhotogapher(photogapher, location) {
     <img class="photogapher__avatar" src="${photogapher.avatar}" onerror="this.onerror=null;this.src='http://placehold.it/50x50?text=?';">
     <div class="photogapher__info">
       <h3 class="photogapher__username" >@${photogapher.username}</h3>
-      <h3 class="photogapher__posts" >Total Posts: ${photogapher.posts}</h3>
       <h3 class="photogapher__featured" >Featured: ${photogapher.featured}</h3>
     </div>
     <div class="photogapher__link">

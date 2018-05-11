@@ -56,7 +56,7 @@ function storeFeaturedCount(data){
 }
 
 function getFeaturedPhotographerTotals() {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     db.get().db('photofeed2').collection('posts').find().toArray((error, response) => {
       if(error || response == null) console.log(error)
       resolve(response)
