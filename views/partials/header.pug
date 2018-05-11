@@ -2,7 +2,7 @@ mixin item(page, url)
   a.topbar__cta.btn.btn--secondary(href=url class=title == page ? 'is-active' : '')=page
 
 nav.topbar
-  span.topbar__brand #PhotoFeed
+  a.topbar__brand(href="/") #PhotoFeed
     a(class="topbar__cta btn btn--primary" href="https://signup.steemit.com/") Join Steem
     a(class="topbar__cta btn btn--secondary faq" href="#") FAQ
     +item('Photographers', '/photographers')
