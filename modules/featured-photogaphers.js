@@ -1,7 +1,7 @@
 const steem = require('steem')
 const db = require('./db')
 const _ = require('lodash')
-const INTERVAL = 1000 * 20 * 1 * 1 // 1 Hour
+const INTERVAL = 1000 * 60 * 60 * 1 // 1 Hour
 
 let config = require('../config');
 // const databaseURL = `mongodb://${config.db.user}:${config.db.password}@ds119150.mlab.com:19150/photofeed2`;
