@@ -1,7 +1,7 @@
 const steem = require('steem')
 const db = require('./db')
 const _ = require('lodash')
-const INTERVAL = 1000 * 60 * 60 * 1 // 1 Hour
+const INTERVAL = 1000 * 60 * 60 * 2 // 2 Hours
 
 let config = require('../config');
 
