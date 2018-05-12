@@ -43,11 +43,39 @@ h3 {
   float: right;
 }
 .header {
-  background: url(https://source.unsplash.com/26GBM9cW33g/1400x600) center center;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+.header__content {
+  position: relative;
+  background: rgba(0,0,0,0.1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 100px;
+  z-index: 1;
+}
+
+.header__bg {
   background-size: cover;
   padding: 100px 0;
   position: relative;
+  background-position: center;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  bottom: -5px;
+  right: -5px;
+  filter: blur(3px);
+  z-index: 0;
 }
+.header__bg--0 {
+  background-image: url(https://source.unsplash.com/26GBM9cW33g/1400x600);
+}
+
 
 .header__title {
   text-align: center;

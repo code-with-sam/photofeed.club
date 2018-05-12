@@ -1,9 +1,18 @@
+mixin item(page, url)
+  a.topbar__cta.btn.btn--secondary(href=url class=title == page ? 'is-active' : '')=page
+
 nav.topbar
-  span.topbar__brand #PhotoFeed
+  a.topbar__brand(href="/") #PhotoFeed
     a(class="topbar__cta btn btn--primary" href="https://signup.steemit.com/") Join Steem
     a(class="topbar__cta btn btn--secondary faq" href="#") FAQ
-    a(class="topbar__cta btn btn--secondary" href="/photographers") Photographers
-    a(class="topbar__cta btn btn--secondary is-active" href="/") Feeds
+    +item('Photographers', '/photographers')
+    +item('Feeds', '/')
+
 header.header
-  h1.header__title Welcome To #PhotoFeed
-  h2.header__sub-title Premier Professional Photography On the Steem Blockchain
+  .header__bg.header__bg--0
+  .header__bg.header__bg--1
+  .header__bg.header__bg--2
+  .header__bg.header__bg--3
+  .header__content
+    h1.header__title Welcome To #PhotoFeed
+    h2.header__sub-title Premier Professional Photography On the Steem Blockchain

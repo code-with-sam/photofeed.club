@@ -7,12 +7,19 @@ let msnry;
 let $gallery = $('.gallery')
 let params, photographer;
 
+
 if ( $('main').hasClass('feeds') ) {
   getFeatured(query, true)
+  initCarousel()
 }
 
 if ( $('main').hasClass('photographers') ) {
   getPhotographers()
+  steem.api.getDiscussionsByBlog(query, (err, result) => {
+    if(err) return console.log(err)
+    displayHeaderImages(result.filter( post => post.author !== 'photofeed'))
+  });
+  initCarousel()
 }
 
 if ( $('main').hasClass('profile') ) {
@@ -97,21 +104,13 @@ function displayPhotogaphers(photographers){
     }
   });
   photographers.shift()
-
   steem.api.getDiscussionsByBlog( { 'tag': 'photofeed', 'limit': 10 }, (err, result) => {
     if (err) return console.log(err)
     const featuredPosts = result.filter( post => post.author !== 'photofeed')
     for (var i = 0; i < 6; i++) {
-      console.log(featuredPosts[i])
       let index = photographers.findIndex(photographer => photographer.username === featuredPosts[i].author)
-      console.log(index)
-      // if (index >= 0) {
-        let photog = photographers[index]
-
-        console.log(photog)
-        appendPhotogapher(photog, '.photographers__latest')
-      // }
-
+      let photog = photographers[index]
+      appendPhotogapher(photog, '.photographers__latest')
     }
   });
 
@@ -121,7 +120,7 @@ function displayPhotogaphers(photographers){
     appendPhotogapher(photographers[i], '.photographers__top')
   }
   for (var i = 6; i < photographers.length; i++) {
-    // appendPhotogapher(photographers[i], '.photographers__all')
+    appendPhotogapher(photographers[i], '.photographers__all')
   }
 }
 
@@ -155,6 +154,7 @@ function getFeatured(query, initial, callback){
     if (err === null) {
       displayImages(featuredPosts, initial, initial ? false : callback)
       getaccounts(result.map(post => post.author))
+      if(initial) displayHeaderImages(featuredPosts)
     } else {
       console.log(err);
     }
@@ -167,6 +167,7 @@ function getTrending(query, initial, callback){
     if (err === null) {
       displayImages(result, initial, initial ? false : callback)
       getaccounts(result.map(post => post.author))
+      if(initial) displayHeaderImages(featuredPosts)
     } else {
       console.log(err);
     }
@@ -179,6 +180,7 @@ function getLatest(query, initial, callback){
     if (err === null) {
       displayImages(result, initial, initial ? false : callback)
       getaccounts(result.map(post => post.author))
+      if(initial) displayHeaderImages(featuredPosts)
     } else {
       console.log(err);
     }
@@ -405,3 +407,36 @@ function uniqueArray(arrArg) {
     return arr.indexOf(elem) == pos;
   });
 };
+
+function displayHeaderImages(images) {
+  for (let i = 3; i < 6 ; i++) {
+      let post = images[i];
+      var urlRegex = /(https?:\/\/[^\s]+)/g;
+      post.body = post.body.replace(urlRegex, (url) => {
+        let last = url.slice(-3)
+        if(last === 'jpg' || last === 'png' || last === 'peg' || last === 'gif')  {
+          return '<img src="' + url + '">';
+        } else {
+          return url
+        }
+      })
+      if( typeof JSON.parse(post.json_metadata).image === 'undefined' ){
+        image = genImageInHTML(post.body)
+      } else {
+        image = JSON.parse(post.json_metadata).image[0]
+      }
+      $('.header__bg--'+(i-2)).css('background-image', `url(${image})`)
+  }
+}
+
+function initCarousel() {
+  $('header > .header__bg:gt(0)').fadeOut();
+  setInterval(function() {
+    $('header > .header__bg:first')
+      .fadeOut(1000)
+      .next()
+      .fadeIn(1000)
+      .end()
+      .appendTo('header');
+  },  4000);
+}

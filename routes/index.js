@@ -4,11 +4,11 @@ let db = require('../modules/db')
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  res.render('index')
+  res.render('index', {title: 'Feeds'})
 })
 
 router.get('/photographers', function(req, res, next) {
-  res.render('photographers')
+  res.render('photographers', {title: 'Photographers'})
 })
 
 router.get('/@:username', function(req, res, next) {
