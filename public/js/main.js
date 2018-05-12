@@ -104,21 +104,13 @@ function displayPhotogaphers(photographers){
     }
   });
   photographers.shift()
-
   steem.api.getDiscussionsByBlog( { 'tag': 'photofeed', 'limit': 10 }, (err, result) => {
     if (err) return console.log(err)
     const featuredPosts = result.filter( post => post.author !== 'photofeed')
     for (var i = 0; i < 6; i++) {
-      console.log(featuredPosts[i])
       let index = photographers.findIndex(photographer => photographer.username === featuredPosts[i].author)
-      console.log(index)
-      // if (index >= 0) {
-        let photog = photographers[index]
-
-        console.log(photog)
-        appendPhotogapher(photog, '.photographers__latest')
-      // }
-
+      let photog = photographers[index]
+      appendPhotogapher(photog, '.photographers__latest')
     }
   });
 
@@ -128,7 +120,7 @@ function displayPhotogaphers(photographers){
     appendPhotogapher(photographers[i], '.photographers__top')
   }
   for (var i = 6; i < photographers.length; i++) {
-    // appendPhotogapher(photographers[i], '.photographers__all')
+    appendPhotogapher(photographers[i], '.photographers__all')
   }
 }
 
