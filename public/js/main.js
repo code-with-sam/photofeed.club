@@ -258,7 +258,7 @@ function displayImages(result, initialLoad, callback){
       var urlRegex = /(https?:\/\/[^\s]+)/g;
       post.body = post.body.replace(urlRegex, (url) => {
         let last = url.slice(-3)
-        if(last === 'jpg' || last === 'png' || last === 'jpe' || last === 'gif')  {
+        if(last === 'jpg' || last === 'png' || last === 'peg' || last === 'gif')  {
           return '<img src="' + url + '">';
         } else {
           return url
