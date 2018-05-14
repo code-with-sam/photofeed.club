@@ -1,3 +1,15 @@
+// style imports via parcel
+import "../scss/main.scss";
+
+import steem from 'steem'
+import $ from 'jquery'
+import inview from 'jquery-inview'
+import showdown from 'showdown'
+
+const Masonry = require('masonry-layout')
+
+//
+import finallyCommentsSystem from './finally-custom';
 
 let query = { 'tag': 'photofeed', 'limit': 7 }
 let converter = new showdown.Converter({ tables: true })
@@ -29,11 +41,8 @@ if ( $('main').hasClass('profile') ) {
   getBlog(query, true)
 }
 
-console.log('HELLO>')
 $('.gallery').on('click', '.item', (e) => {
-  console.log('test')
   lastTop = $(window).scrollTop();
-  console.log(lastTop)
   loadPost(e.currentTarget)
 })
 
@@ -62,7 +71,6 @@ $('.nav__link').on('click', (e) => {
 
 $('.overlay__bg').on('click', () => {
   $('body').removeClass('noscroll')
-  console.log(lastTop)
   $(window).scrollTop( lastTop );
   $('.overlay, .overlay__bg, .overlay__content, .overlay__faq .overlay__photographers').removeClass('overlay--active')
 })
@@ -96,14 +104,13 @@ function displayPhotogaphers(photographers){
       return 0;
     }
   });
-  photographers.shift()
   steem.api.getDiscussionsByBlog( { 'tag': 'photofeed', 'limit': 10 }, (err, result) => {
-    if (err) return console.log(err)
+    if (err) return console.log(err, result)
     const featuredPosts = result.filter( post => post.author !== 'photofeed')
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < featuredPosts.length; i++) {
       let index = photographers.findIndex(photographer => photographer.username === featuredPosts[i].author)
       let photog = photographers[index]
-      appendPhotogapher(photog, '.photographers__latest')
+      if(index >= 0) appendPhotogapher(photog, '.photographers__latest')
     }
   });
 
@@ -118,6 +125,7 @@ function displayPhotogaphers(photographers){
 }
 
 function appendPhotogapher(photogapher, location) {
+  console.log(photogapher)
   let template = `<div class="photogapher__single cf">
     <a href="/@${photogapher.username}">
     <img class="photogapher__avatar" src="${photogapher.avatar}" onerror="this.onerror=null;this.src='http://placehold.it/50x50?text=?';">
@@ -212,7 +220,8 @@ function getMoreContent(){
 
               $item.children('img').on('load', (e) => {
                 $(e.currentTarget).parent().removeClass('hidden')
-                $gallery.masonry( 'appended', $(e.currentTarget).parent())
+                msnry.appended($(e.currentTarget).parent())
+
               })
           })
           setInfiniteScrollPoint()
@@ -246,7 +255,7 @@ function getaccounts(usernames){
 function displayImages(result, initialLoad, callback){
   let items = []
   for (let i = 0; i < result.length ; i++) {
-      let post = result[i];
+      let post = result[i]; let image;
 
       var urlRegex = /(https?:\/\/[^\s]+)/g;
       post.body = post.body.replace(urlRegex, (url) => {
@@ -314,9 +323,10 @@ function checkImages(items){
 function initMasonry(images){
   images.parent().removeClass('hidden')
 
-  if( $('.gallery').data('masonry') ) $gallery.masonry('destroy')
+  if( $('.gallery').data('masonry') ) msnry.destroy()
 
-  $gallery.masonry({
+
+  msnry = new Masonry('.gallery', {
     itemSelector: '.item',
     columnWidth: '.item',
     gutter: 16,
@@ -366,7 +376,7 @@ function loadPost(item) {
   html = html.replace('<p><br></p>', '')
   html = html.replace('<p></p>', '')
 
-  lastTop = $(window).scrollTop();
+  let lastTop = $(window).scrollTop();
 
   $('body').addClass( 'noscroll' ).css( { top: -lastTop } )
 
@@ -377,7 +387,7 @@ function loadPost(item) {
       <img class="overlay__author-img" width="35" height="35" src="${profileImage}">
       <div class="overlay__author-info">
         <span class="overlay__author-name">${( user.json_metadata.name ?  user.json_metadata.name : user.name ) }</span>
-        <a href="profile.html?photographer=${user.name}"class="overlay__author-username">@${user.name}</a>
+        <a href="/@${user.name}" class="overlay__author-username">@${user.name}</a>
       </div>
     </div>
     <div class="overlay__tags">${tags}</div>
@@ -386,6 +396,7 @@ function loadPost(item) {
     <hr class="overlay__border">
   `
   let comments = `<section class="finally-comments" data-id="https://steemit.com/${post.url}" data-reputation="true" data-values="true" data-profile="true"></section>`
+
   $('.overlay__content').empty()
   $('.overlay__content').append(header + html + comments)
   $('.overlay, .overlay__bg, .overlay__content').addClass('overlay--active')
@@ -402,7 +413,7 @@ function uniqueArray(arrArg) {
 
 function displayHeaderImages(images) {
   for (let i = 3; i < 6 ; i++) {
-      let post = images[i];
+      let post = images[i]; let image;
       var urlRegex = /(https?:\/\/[^\s]+)/g;
       post.body = post.body.replace(urlRegex, (url) => {
         let last = url.slice(-3)
